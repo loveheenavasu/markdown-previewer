@@ -30,7 +30,7 @@ const editorConfig = {
   editorState: prepopulatedText,
   namespace: "editor",
   theme: LexicalTheme,
-  onError(error) {
+  onError(error: Error) {
     throw error;
   },
   nodes: [

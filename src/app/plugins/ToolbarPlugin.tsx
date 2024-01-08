@@ -1,5 +1,5 @@
 import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext";
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { SetStateAction, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import {
   SELECTION_CHANGE_COMMAND,
   FORMAT_TEXT_COMMAND,
@@ -30,7 +30,40 @@ import {
   getDefaultCodeLanguage,
   getCodeLanguages,
 } from "@lexical/code";
+import {
+  GridSelection,
+  LexicalEditor,
+  RangeSelection,
+  TextFormatType
+} from 'lexical';
 
+
+
+interface SelectProps {
+  onChange: React.ChangeEventHandler<HTMLSelectElement>;
+  className: string;
+  options: string[];
+  value: string;
+}
+
+interface BlockOptionsDropdownListProps {
+  editor: LexicalEditor;
+  blockType: string;
+  toolbarRef: React.RefObject<HTMLDivElement>;
+  setShowBlockOptionsDropDown: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+
+
+export interface FloatingLinkEditorProps {
+  editor: LexicalEditor;
+  setLinkUrl: React.Dispatch<React.SetStateAction<string>>;
+  linkUrl: string;
+}
+interface positionEditorElementProps {
+  editor: HTMLElement, 
+  rect: DOMRect | null
+}
 const LowPriority = 1;
 
 const supportedBlockTypes = new Set([
@@ -60,7 +93,7 @@ function Divider() {
   return <div className="divider" />;
 }
 
-function positionEditorElement(editor, rect) {
+function positionEditorElement(editor: HTMLElement, rect: DOMRect | null): void {
   if (rect === null) {
     editor.style.opacity = "0";
     editor.style.top = "-1000px";
@@ -74,13 +107,13 @@ function positionEditorElement(editor, rect) {
   }
 }
 
-function FloatingLinkEditor({ editor }) {
+function FloatingLinkEditor({ editor }:FloatingLinkEditorProps) {
   const editorRef = useRef(null);
-  const inputRef = useRef(null);
+  const inputRef = useRef<HTMLInputElement>(null);
   const mouseDownRef = useRef(false);
   const [linkUrl, setLinkUrl] = useState("");
   const [isEditMode, setEditMode] = useState(false);
-  const [lastSelection, setLastSelection] = useState(null);
+  const [lastSelection, setLastSelection] = useState<RangeSelection | null>(null);
 
   const updateLinkEditor = useCallback(() => {
     const selection = $getSelection();
@@ -106,16 +139,16 @@ function FloatingLinkEditor({ editor }) {
     const rootElement = editor.getRootElement();
     if (
       selection !== null &&
-      !nativeSelection.isCollapsed &&
+      !nativeSelection!.isCollapsed &&
       rootElement !== null &&
-      rootElement.contains(nativeSelection.anchorNode)
+      rootElement.contains(nativeSelection!.anchorNode)
     ) {
-      const domRange = nativeSelection.getRangeAt(0);
+      const domRange = nativeSelection!.getRangeAt(0);
       let rect;
-      if (nativeSelection.anchorNode === rootElement) {
+      if (nativeSelection!.anchorNode === rootElement) {
         let inner = rootElement;
         while (inner.firstElementChild != null) {
-          inner = inner.firstElementChild;
+          inner = inner.firstElementChild as HTMLElement;;
         }
         rect = inner.getBoundingClientRect();
       } else {
@@ -125,7 +158,7 @@ function FloatingLinkEditor({ editor }) {
       if (!mouseDownRef.current) {
         positionEditorElement(editorElem, rect);
       }
-      setLastSelection(selection);
+      setLastSelection(selection as RangeSelection);
     } else if (!activeElement || activeElement.className !== "link-input") {
       positionEditorElement(editorElem, null);
       setLastSelection(null);
@@ -214,7 +247,7 @@ function FloatingLinkEditor({ editor }) {
   );
 }
 
-function Select({ onChange, className, options, value }) {
+function Select({ onChange, className, options, value }:SelectProps) {
   return (
     <select className={className} onChange={onChange} value={value}>
       <option hidden={true} value="" />
@@ -227,7 +260,7 @@ function Select({ onChange, className, options, value }) {
   );
 }
 
-function getSelectedNode(selection) {
+function getSelectedNode(selection: RangeSelection) {
   const anchor = selection.anchor;
   const focus = selection.focus;
   const anchorNode = selection.anchor.getNode();
@@ -248,8 +281,8 @@ function BlockOptionsDropdownList({
   blockType,
   toolbarRef,
   setShowBlockOptionsDropDown,
-}) {
-  const dropDownRef = useRef(null);
+}:BlockOptionsDropdownListProps) {
+  const dropDownRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
     const toolbar = toolbarRef.current;
@@ -267,7 +300,7 @@ function BlockOptionsDropdownList({
     const toolbar = toolbarRef.current;
 
     if (dropDown !== null && toolbar !== null) {
-      const handle = (event) => {
+      const handle = (event: { target: any; }) => {
         const target = event.target;
 
         if (!dropDown.contains(target) && !toolbar.contains(target)) {
@@ -322,23 +355,19 @@ function BlockOptionsDropdownList({
   };
 
   const formatBulletList = () => {
-    if (blockType !== "ul") {
-      editor.dispatchCommand(INSERT_UNORDERED_LIST_COMMAND);
+    if (blockType !== 'ul') {
+      editor.dispatchCommand(INSERT_UNORDERED_LIST_COMMAND, undefined);
     } else {
-      editor.dispatchCommand(REMOVE_LIST_COMMAND);
+      editor.dispatchCommand(REMOVE_LIST_COMMAND, undefined);
     }
-    setShowBlockOptionsDropDown(false);
   };
-
   const formatNumberedList = () => {
-    if (blockType !== "ol") {
-      editor.dispatchCommand(INSERT_ORDERED_LIST_COMMAND);
+    if (blockType !== 'ol') {
+      editor.dispatchCommand(INSERT_ORDERED_LIST_COMMAND, undefined);
     } else {
-      editor.dispatchCommand(REMOVE_LIST_COMMAND);
+      editor.dispatchCommand(REMOVE_LIST_COMMAND, undefined);
     }
-    setShowBlockOptionsDropDown(false);
   };
-
   const formatQuote = () => {
     if (blockType !== "quote") {
       editor.update(() => {
@@ -410,7 +439,7 @@ export default function ToolbarPlugin() {
   const [editor] = useLexicalComposerContext();
   const toolbarRef = useRef(null);
   const [blockType, setBlockType] = useState("paragraph");
-  const [selectedElementKey, setSelectedElementKey] = useState(null);
+  const [selectedElementKey, setSelectedElementKey] = useState<string | null>(null);
   const [showBlockOptionsDropDown, setShowBlockOptionsDropDown] =
     useState(false);
   const [codeLanguage, setCodeLanguage] = useState("");
@@ -485,7 +514,7 @@ export default function ToolbarPlugin() {
 
   const codeLanguges = useMemo(() => getCodeLanguages(), []);
   const onCodeLanguageSelect = useCallback(
-    (e) => {
+    (e: { target: { value: string; }; }) => {
       editor.update(() => {
         if (selectedElementKey !== null) {
           const node = $getNodeByKey(selectedElementKey);
@@ -518,7 +547,7 @@ export default function ToolbarPlugin() {
             aria-label="Formatting Options"
           >
             <span className={"icon block-type " + blockType} />
-            <span className="text">{blockTypeToBlockName[blockType]}</span>
+            <span className="text">{blockTypeToBlockName[blockType as keyof typeof blockTypeToBlockName ]}</span>
             <i className="chevron-down" />
           </button>
           {showBlockOptionsDropDown &&
@@ -601,7 +630,9 @@ export default function ToolbarPlugin() {
             <i className="format link" />
           </button>
           {isLink &&
-            createPortal(<FloatingLinkEditor editor={editor} />, document.body)}
+            createPortal(<FloatingLinkEditor editor={editor} setLinkUrl={function (value: SetStateAction<string>): void {
+              throw new Error("Function not implemented.");
+            } } linkUrl={""} />, document.body)}
         </>
       )}
     </div>

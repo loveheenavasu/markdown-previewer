@@ -1,2 +1,2 @@
-export {ToolbarPlugin } from './ToolbarPlugin';
+import ToolbarPlugin  from './ToolbarPlugin';
 export { CodeHighlightPlugin } from './CodeHighlightPlugin';
