@@ -17,15 +17,10 @@ export default function Home() {
     <div>
       <main>
         {loading ? (
-          <div className="loading">
-            Please wait while Loading.....
-          </div>
+          <div className="loading">Please wait while Loading.....</div>
         ) : (
           <>
-            <h1 className="heading"
-            >
-              Markdown Previewer
-            </h1>
+            <h1 className="heading">MARKDOWN PREVIEWR WITH LEXICAL</h1>
             <LexicalEditor />
           </>
         )}

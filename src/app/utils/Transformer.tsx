@@ -1,9 +1,4 @@
-import {
-  $convertFromMarkdownString,
-  $convertToMarkdownString,
-} from "@lexical/markdown";
-import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext";
-import { $createTextNode, $getRoot } from "lexical";
+import { $convertToMarkdownString } from "@lexical/markdown";
 import React, { useState } from "react";
 import { OnChangePlugin } from "@lexical/react/LexicalOnChangePlugin";
 

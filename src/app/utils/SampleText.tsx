@@ -37,10 +37,16 @@ export default function prepopulatedText() {
       ),
       $createTextNode(`).`)
     ),
-    $createListItemNode().append($createTextNode(`Hii everyone this is my markdown editor`))
+    $createListItemNode().append(
+      $createTextNode(`Hii everyone this is my markdown editor`)
+    )
   );
   root.append(list);
   const paragraph3 = $createParagraphNode();
-  paragraph3.append($createTextNode(`A user-friendly web app for real-time Markdown to HTML rendering using Next.js`));
+  paragraph3.append(
+    $createTextNode(
+      `A user-friendly web app for real-time Markdown to HTML rendering using Next.js`
+    )
+  );
   root.append(paragraph3);
 }
