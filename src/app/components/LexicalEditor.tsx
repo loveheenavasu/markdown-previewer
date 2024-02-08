@@ -49,14 +49,21 @@ const editorConfig = {
 };
 
 export default function Editor() {
+  const containerStyles = {
+    display: "flex",
+    gap: "48px",
+    padding: "48px",
+    justifyContent: "center",
+    minHeight: "calc(100vh - 92px)"
+  };
   return (
     <>
       <LexicalComposer initialConfig={editorConfig}>
-        <div style={{ display: "flex", justifyContent: "space-evenly" }}>
-          <div className="editor-container">
+        <div style={containerStyles}>
+          <div className="editor-container" style={{flex:1}}>
             <ToolbarPlugin />
 
-            <div className="editor-inner">
+            <div className="editor-inner" >
               <RichTextPlugin
                 contentEditable={<ContentEditable className="editor-input" />}
                 placeholder={<Placeholder />}
@@ -70,7 +77,7 @@ export default function Editor() {
               <CodeHighlightPlugin />
             </div>
           </div>
-          <div>
+          <div >
             <Transformaer />
           </div>
         </div>

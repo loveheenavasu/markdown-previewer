@@ -85,6 +85,7 @@ h1 {
   border-bottom-right-radius: 10px;
   border-bottom-left-radius: 10px;
   position: relative;
+  height: 90%;
 }
 
 .editor-input {
@@ -707,6 +708,7 @@ i.markdown {
   font-weight: normal;
   line-height: 17px;
   border-radius: 10px;
+  height:99%;
 }
 
 
