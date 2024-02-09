@@ -67,7 +67,7 @@ return(
 <div className="row">
   <div className="column"> 
    <Image
-      src="/markdown.png"
+      src="/markdown-img.png"
       className="markdown-img"
       width={500}
       height={280}

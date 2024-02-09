@@ -96,7 +96,7 @@ align-items: center;
 
 }
 .markdown-img{
-    object-fit: cover;
+    object-fit: contain;
 }
 .feature{
     width:340px;
