@@ -25,7 +25,7 @@ return(
  <div className="splash-screen">
   <div className="navigation-bar"><GoPencil />
 
-    <span>Start Writing</span>
+    <span>Initiate Your Markdown</span>
   </div>
 <div>
   <div className="splash-screen__logo">
@@ -54,9 +54,13 @@ return(
                     </div>
 </div>
 </div>
-<div className="splash-screen__footer">
+<div className="markdown-support">
+  
+<div className="button" onClick={()=>router.push("/editor")}>Click Here to See Demo</div>
+</div>
+<div className="splash-screen__footer"  onClick={handleClick}>
 <RiArrowDownDoubleFill/>
-  <span onClick={handleClick}>Read More</span>
+  <span>Read More</span>
 </div>
 </div>
 <div  ref={ref}></div>
@@ -74,7 +78,7 @@ return(
       alt="Picture of the author"
     /></div>
   <div className="feature">
-    <h2>Rich Markdown editor
+    <h2>Rich Markdown Editor
 </h2>
 <p>Markdown-Previewer Markdown syntax highlighting is unique. The refined text formatting of the editor helps you visualize the final rendering of your files.
 </p>
@@ -91,15 +95,15 @@ className="editor-tool-img"
  alt="Picture of the author"
 
 />
-<h2>WYSIWYG controls</h2>
+<h2>WYSIWYG Controls</h2>
 <p>Markdown-Previewer provides very handy formatting buttons and shortcuts, thanks to PageDown, the WYSIWYG-style Markdown editor used by Stack Overflow.</p>
 </div>
 
 <div className="controls-tools">
 
-<h2>Live preview with Scroll Sync
+<h2>Markdown Converter Live Preview
 </h2>
-<p>Markdown-Previewer Scroll Sync feature accurately binds the scrollbars of the editor panel and the preview panel to ensure that you always keep an eye on the output while writing</p>
+<p>Markdown Converter Live Preview offers real-time transformation of Markdown syntax into formatted content, ensuring seamless editing without toggling between windows. With customizable themes and error highlighting, it enhances productivity and simplifies the editing process.</p>
 <Image
 src="/ScrollSync.png"
 className="editor-tool-img"
@@ -111,8 +115,7 @@ className="editor-tool-img"
 </div>
 
 <div className="markdown-support">
-  <h1>Extended Markdown support
-</h1>
+  
 <div className="button" onClick={()=>router.push("/editor")}>Click Here to See Demo</div>
 </div>
 
