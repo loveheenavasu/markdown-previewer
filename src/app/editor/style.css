@@ -169,7 +169,7 @@ object-fit: contain;
     -webkit-text-stroke: 0vw #383d52;
     border-right: 2px solid black;
     overflow: hidden;
-    animation: animate 1s linear infinite;
+    animation: animate 5s linear infinite;
 
 }   
 @keyframes animate{

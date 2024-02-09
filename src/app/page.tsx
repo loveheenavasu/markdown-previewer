@@ -32,7 +32,7 @@ return(
   <Image src="/typing.png" width={200} height={200}alt ="image not found"/>
 
 
-  <h2 data-text="MarkDown Previewer">MarkDown Previewer</h2>
+<h2 data-text="MarkDown Previewer">MarkDown Previewer</h2>
 
   </div>
   <div className="splash-screen__subtitle">
