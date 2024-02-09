@@ -14,7 +14,10 @@ const Home = () => {
   const router = useRouter()
 
   const handleClick = () => {
-    ref.current?.scrollIntoView({behavior: 'smooth'});
+    if (ref.current) {
+      (ref.current as HTMLElement)?.scrollIntoView({ behavior: 'smooth' });
+
+  }
   };
 
 return(
