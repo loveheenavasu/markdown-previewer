@@ -8,16 +8,21 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import {
   SELECTION_CHANGE_COMMAND,
   FORMAT_TEXT_COMMAND,
+  UNDO_COMMAND,
+  REDO_COMMAND,
   $getSelection,
   $isRangeSelection,
   $getNodeByKey,
 } from "lexical";
+import {Icon,Box} from '@chakra-ui/react';
 import { $isLinkNode, TOGGLE_LINK_COMMAND } from "@lexical/link";
 import { $wrapNodes, $isAtNodeEnd } from "@lexical/selection";
 import { $getNearestNodeOfType, mergeRegister } from "@lexical/utils";
 import { $isListNode, ListNode } from "@lexical/list";
 import { createPortal } from "react-dom";
 import { $isHeadingNode } from "@lexical/rich-text";
+import { LuUndo } from "react-icons/lu";
+import { LuRedo } from "react-icons/lu";
 import {
   $isCodeNode,
   getDefaultCodeLanguage,
@@ -28,6 +33,7 @@ import { FloatingLinkEditor } from "../components/FloatingLinkEditor";
 import { SelectionType, SelectProps } from "../utils/types";
 import { BlockOptionsDropdownList } from "../components/BlockOptionsDropdownList";
 import { getSelectedNode } from "../utils/lexicalHelper";
+import { FaSun } from "react-icons/fa";
 
 function Divider() {
   return <div className="divider" />;
@@ -53,7 +59,10 @@ export default function ToolbarPlugin() {
     useState(false);
   const [isLink, setIsLink] = useState(false);
   const [linkUrl, setLinkUrl] = useState("");
-
+  const [state, setState] = useState({
+    isUndo: false,
+    isRedo: false,
+  });
   const [tooltbar, setToolbar] = useState({
     blockType: "paragraph",
     selectedElementKey: null,
@@ -65,12 +74,27 @@ export default function ToolbarPlugin() {
     isItalic: false,
     isStrikethrough: false,
     isCode: false,
+    isRedo:false,
+    isUndo:false,
   });
 
-  const { isBold, isItalic, isStrikethrough, isCode } = styles;
+  const { isBold, isItalic, isStrikethrough, isCode ,isUndo,isRedo} = styles;
 
   const { blockType, selectedElementKey, codeLanguage } = tooltbar;
-
+const undoHanlder=(key:string,value:boolean)=>{
+  editor.dispatchCommand(UNDO_COMMAND,null||undefined);
+  setState(prevState => ({
+    ...prevState,
+    [key]: value,
+  }));
+};
+const redoHandler=(key:string,value:boolean)=>{
+  editor.dispatchCommand(REDO_COMMAND,null||undefined);
+  setState(prevState => ({
+    ...prevState,
+    [key]: value,
+  }));
+}
   const updateToolbar = useCallback(() => {
     const selection = $getSelection();
 
@@ -217,6 +241,23 @@ export default function ToolbarPlugin() {
             aria-label="Format Bold"
           >
             <i className="format bold" />
+          </button>
+          <button aria-label="Format undo"
+          onClick={()=>{undoHanlder('isUndo',!state.isUndo);
+          }}
+          className={"toolbar-item spaced " + (state.isUndo? "active" : "")}
+          style={{alignItems:'center'}}
+          >
+            <Icon as={LuUndo} color={state.isUndo?'black':'#666666'}/>
+          </button>
+          <button aria-label="Format Redo"
+          onClick={()=>{
+            redoHandler('isRedo',!state.isRedo)
+          }}
+          className={"toolbar-item spaced " + (state.isRedo? "active" : "")}
+          style={{alignItems:'center'}}
+          >
+            <Icon as={LuRedo} color={state.isRedo?'black':'#666666'}/>
           </button>
           <button
             onClick={() => {
