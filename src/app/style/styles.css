@@ -1,7 +1,7 @@
 body {
   margin: 0;
   background: #eee;
-    font-family: 'Ubuntu Mono', monospace;
+  font-family: "Ubuntu Mono", monospace;
   font-weight: 500;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -49,7 +49,7 @@ button.action-button:disabled {
 }
 
 .App {
-  font-family: 'Ubuntu Mono', monospace;
+  font-family: "Ubuntu Mono", monospace;
   text-align: center;
   padding: 10px 5%;
 }
@@ -57,6 +57,9 @@ button.action-button:disabled {
 h1 {
   font-size: 24px;
   color: #333;
+}
+h2 {
+  font-size: 24px;
 }
 
 .ltr {
@@ -136,7 +139,7 @@ h1 {
 .editor-text-code {
   background-color: rgb(240, 242, 245);
   padding: 1px 0.25rem;
-  font-family: 'Ubuntu Mono', monospace;
+  font-family: "Ubuntu Mono", monospace;
   font-size: 94%;
 }
 
@@ -147,7 +150,8 @@ h1 {
 
 .editor-code {
   background-color: rgb(240, 242, 245);
-  font-family: 'Ubuntu Mono', monospace;
+  font-family: "Ubuntu Mono", monospace;
+  color: black;
   display: block;
   padding: 8px 8px 8px 52px;
   line-height: 1.53;
@@ -389,6 +393,7 @@ pre::-webkit-scrollbar-thumb {
   margin-right: 8px;
   line-height: 16px;
   background-size: contain;
+  color: black;
 }
 
 .toolbar i.chevron-down {
@@ -605,13 +610,13 @@ i.chevron-down {
 }
 
 .link-editor .button i,
-  .actions i {
-    background-size: contain;
-    display: inline-block;
-    height: 20px;
-    width: 20px;
-    vertical-align: -0.25em;
-  }
+.actions i {
+  background-size: contain;
+  display: inline-block;
+  height: 20px;
+  width: 20px;
+  vertical-align: -0.25em;
+}
 
 i.undo {
   background-image: url(../../../public/images/icons/arrow-counterclockwise.svg);
@@ -708,9 +713,8 @@ i.markdown {
   font-weight: normal;
   line-height: 17px;
   border-radius: 10px;
-  height:99%;
+  height: 99%;
 }
-
 
 .loading {
   text-align: center;
@@ -724,6 +728,7 @@ i.markdown {
 }
 
 .heading {
+  position: relative;
   text-align: center;
   margin-top: 2rem;
   margin-bottom: 2rem;

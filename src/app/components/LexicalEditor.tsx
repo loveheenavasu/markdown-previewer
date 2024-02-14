@@ -18,6 +18,7 @@ import { CodeHighlightPlugin } from "../plugins/CodeHighlightPlugin";
 import prepopulatedText from "../utils/SampleText";
 import LexicalErrorBoundary from "@lexical/react/LexicalErrorBoundary";
 import Transformaer from "../utils/Transformer";
+import { Box } from "@chakra-ui/react";
 
 function Placeholder() {
   return (
@@ -55,7 +56,8 @@ export default function Editor() {
     gap: "48px",
     padding: "48px",
     justifyContent: "center",
-    minHeight: "calc(100vh - 92px)"
+    minHeight: "calc(100vh - 92px)",
+    fontFamily: " ubuntu, monospace"
   };
   return (
     <>
@@ -79,9 +81,9 @@ export default function Editor() {
               <CodeHighlightPlugin />
             </div>
           </div>
-          <div >
+          <Box>
             <Transformaer />
-          </div>
+          </Box>
         </div>
       </LexicalComposer>
     </>
