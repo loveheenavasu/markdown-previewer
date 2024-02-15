@@ -133,6 +133,12 @@
   border-radius: 2px solid green;
   flex-direction: column;
 }
+.editor-tool-img-container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 30px;
+}
 .editor-tool-img {
   margin-top: -10px;
   border-radius: 6px;

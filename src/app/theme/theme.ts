@@ -38,6 +38,9 @@ const theme = extendTheme({
       ".splash-screen": {
         bg: props.colorMode === "dark" ? "white" : "#131313",
       },
+      ".splash-screen__logo h2::before": {
+        color: props.colorMode === "dark" ? "#606060" : "#8d8d8d"
+      },
       ".hr-break": {
         bg: props.colorMode === "dark" ? "#9a9a9a" : "#eee",
       },

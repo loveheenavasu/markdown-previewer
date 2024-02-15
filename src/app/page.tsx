@@ -7,7 +7,7 @@ import Image from "next/image";
 import { RiArrowDownDoubleFill } from "react-icons/ri";
 import { useRef } from "react";
 import { useRouter } from "next/navigation";
-import { AspectRatio, Icon, useColorMode } from "@chakra-ui/react";
+import { Icon, useColorMode } from "@chakra-ui/react";
 
 const Home = () => {
   const ref = useRef(null);
@@ -131,14 +131,7 @@ const Home = () => {
           </p>
         </div>
       </div>
-      <div
-        style={{
-          width: "100%",
-          display: "flex",
-          justifyContent: "center",
-          marginBottom: "30px",
-        }}
-      >
+      <div className="editor-tool-img-container">
         <Image
           src="/demo1.gif"
           className="editor-tool-img"
