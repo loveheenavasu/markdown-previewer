@@ -22,6 +22,10 @@ const theme = extendTheme({
         color: props.colorMode === "dark" ? "black" : "white",
         bg: props.colorMode === "dark" ? "#eeeeee" : "black",
       },
+      "::selection": {
+        background: props.colorMode === "dark" ? "#2f2f2f" : "white",
+        color: props.colorMode === "dark" ? "white" : "black",
+      },
       h1: {
         fontSize: "30px",
         fontWeight: "600",
