@@ -36,7 +36,7 @@ const theme = extendTheme({
         fontWeight: "450",
       },
       ".splash-screen": {
-        bg: props.colorMode === "dark" ? "white" : "#5c5b5b",
+        bg: props.colorMode === "dark" ? "white" : "#131313",
       },
       ".hr-break": {
         bg: props.colorMode === "dark" ? "#9a9a9a" : "#eee",
