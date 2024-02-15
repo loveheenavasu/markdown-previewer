@@ -41,9 +41,6 @@ const theme = extendTheme({
       ".hr-break": {
         bg: props.colorMode === "dark" ? "#9a9a9a" : "#eee",
       },
-      ".editor-tool-img":{
-        marginBottom: props.colorMode === "dark" ? "40px" : "40px"
-      },
       ".toolbar": {
         bg: props.colorMode === "dark" ? "white" : "#b3b9bb",
         color: props.colorMode === "dark" ? "black" : "white",
