@@ -13,8 +13,9 @@ import {
   $getSelection,
   $isRangeSelection,
   $getNodeByKey,
+  FORMAT_ELEMENT_COMMAND,
 } from "lexical";
-import {Icon,Box} from '@chakra-ui/react';
+import { Icon } from "@chakra-ui/react";
 import { $isLinkNode, TOGGLE_LINK_COMMAND } from "@lexical/link";
 import { $wrapNodes, $isAtNodeEnd } from "@lexical/selection";
 import { $getNearestNodeOfType, mergeRegister } from "@lexical/utils";
@@ -30,11 +31,18 @@ import {
 } from "@lexical/code";
 // import { RangeSelection } from "lexical";
 import { FloatingLinkEditor } from "../components/FloatingLinkEditor";
-import { SelectionType, SelectProps } from "../utils/types";
+import { SelectProps } from "../utils/types";
 import { BlockOptionsDropdownList } from "../components/BlockOptionsDropdownList";
 import { getSelectedNode } from "../utils/lexicalHelper";
-import { FaSun } from "react-icons/fa";
-
+import { AlignMenuButtons } from "../components/AlignMentDropDown";
+type alignmentType =
+  | "left"
+  | "start"
+  | "center"
+  | "right"
+  | "end"
+  | "justify"
+  | "";
 function Divider() {
   return <div className="divider" />;
 }
@@ -72,29 +80,32 @@ export default function ToolbarPlugin() {
   const [styles, setStyles] = useState({
     isBold: false,
     isItalic: false,
+    isUnderLine: false,
     isStrikethrough: false,
     isCode: false,
-    isRedo:false,
-    isUndo:false,
   });
 
-  const { isBold, isItalic, isStrikethrough, isCode ,isUndo,isRedo} = styles;
-
+  const { isBold, isItalic, isStrikethrough, isCode, isUnderLine } = styles;
   const { blockType, selectedElementKey, codeLanguage } = tooltbar;
-const undoHanlder=(key:string,value:boolean)=>{
-  editor.dispatchCommand(UNDO_COMMAND,null||undefined);
-  setState(prevState => ({
-    ...prevState,
-    [key]: value,
-  }));
-};
-const redoHandler=(key:string,value:boolean)=>{
-  editor.dispatchCommand(REDO_COMMAND,null||undefined);
-  setState(prevState => ({
-    ...prevState,
-    [key]: value,
-  }));
-}
+  const undoHanlder = (key: string, value: boolean) => {
+    editor.dispatchCommand(UNDO_COMMAND, null || undefined);
+    setState((prevState) => ({
+      ...prevState,
+      [key]: value,
+    }));
+  };
+  const redoHandler = (key: string, value: boolean) => {
+    editor.dispatchCommand(REDO_COMMAND, null || undefined);
+    setState((prevState) => ({
+      ...prevState,
+      [key]: value,
+    }));
+  };
+  const alignment = (alignment: alignmentType) => {
+    if (alignment) {
+      editor.dispatchCommand(FORMAT_ELEMENT_COMMAND, alignment);
+    }
+  };
   const updateToolbar = useCallback(() => {
     const selection = $getSelection();
 
@@ -234,6 +245,26 @@ const redoHandler=(key:string,value:boolean)=>{
       ) : (
         <>
           <button
+            aria-label="Format undo"
+            onClick={() => {
+              undoHanlder("isUndo", !state.isUndo);
+            }}
+            className={"toolbar-item spaced " + (state.isUndo ? "active" : "")}
+            style={{ alignItems: "center" }}
+          >
+            <Icon as={LuUndo} color={state.isUndo ? "black" : "#666666"} />
+          </button>
+          <button
+            aria-label="Format Redo"
+            onClick={() => {
+              redoHandler("isRedo", !state.isRedo);
+            }}
+            className={"toolbar-item spaced " + (state.isRedo ? "active" : "")}
+            style={{ alignItems: "center" }}
+          >
+            <Icon as={LuRedo} color={state.isRedo ? "black" : "#666666"} />
+          </button>
+          <button
             onClick={() => {
               editor.dispatchCommand(FORMAT_TEXT_COMMAND, "bold");
             }}
@@ -241,23 +272,6 @@ const redoHandler=(key:string,value:boolean)=>{
             aria-label="Format Bold"
           >
             <i className="format bold" />
-          </button>
-          <button aria-label="Format undo"
-          onClick={()=>{undoHanlder('isUndo',!state.isUndo);
-          }}
-          className={"toolbar-item spaced " + (state.isUndo? "active" : "")}
-          style={{alignItems:'center'}}
-          >
-            <Icon as={LuUndo} color={state.isUndo?'black':'#666666'}/>
-          </button>
-          <button aria-label="Format Redo"
-          onClick={()=>{
-            redoHandler('isRedo',!state.isRedo)
-          }}
-          className={"toolbar-item spaced " + (state.isRedo? "active" : "")}
-          style={{alignItems:'center'}}
-          >
-            <Icon as={LuRedo} color={state.isRedo?'black':'#666666'}/>
           </button>
           <button
             onClick={() => {
@@ -295,6 +309,8 @@ const redoHandler=(key:string,value:boolean)=>{
           >
             <i className="format link" />
           </button>
+          <Divider />
+          <AlignMenuButtons editor={editor}/>
           {isLink &&
             createPortal(
               <FloatingLinkEditor

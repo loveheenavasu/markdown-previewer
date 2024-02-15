@@ -20,7 +20,6 @@ export function BlockOptionsDropdownList({
   toolbarRef,
   setShowBlockOptionsDropDown,
 }: BlockOptionsDropdownListProps) {
-  console.log(blockType, "blockType");
   const dropDownRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
@@ -130,7 +129,7 @@ export function BlockOptionsDropdownList({
           $wrapNodes(selection, () => $createCodeNode());
         }
       });
-    }
+    } 
     setShowBlockOptionsDropDown(false);
   };
 

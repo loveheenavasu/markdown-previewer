@@ -19,7 +19,6 @@ export default function Home() {
   const handleToogleButton = () => {
     setToogleButton((prev) => !prev);
   };
-  console.log(colorMode, toggleColorMode, "colorMode");
   return (
     <div>
       <main>

@@ -35,7 +35,6 @@ const theme = extendTheme({
         fontSize: "24px",
         fontWeight: "bold",
       },
-      div: {},
       span: {
         fontWeight: "450",
       },
