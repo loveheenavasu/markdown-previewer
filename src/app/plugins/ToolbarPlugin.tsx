@@ -7,17 +7,14 @@ import {
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import {
   SELECTION_CHANGE_COMMAND,
-  FORMAT_TEXT_COMMAND,
   UNDO_COMMAND,
   REDO_COMMAND,
   $getSelection,
   $isRangeSelection,
   $getNodeByKey,
-  FORMAT_ELEMENT_COMMAND,
 } from "lexical";
 import { Icon } from "@chakra-ui/react";
 import { $isLinkNode, TOGGLE_LINK_COMMAND } from "@lexical/link";
-import { $wrapNodes, $isAtNodeEnd } from "@lexical/selection";
 import { $getNearestNodeOfType, mergeRegister } from "@lexical/utils";
 import { $isListNode, ListNode } from "@lexical/list";
 import { createPortal } from "react-dom";
@@ -29,20 +26,13 @@ import {
   getDefaultCodeLanguage,
   getCodeLanguages,
 } from "@lexical/code";
-// import { RangeSelection } from "lexical";
 import { FloatingLinkEditor } from "../components/FloatingLinkEditor";
 import { SelectProps } from "../utils/types";
 import { BlockOptionsDropdownList } from "../components/BlockOptionsDropdownList";
 import { getSelectedNode } from "../utils/lexicalHelper";
 import { AlignMenuButtons } from "../components/AlignMentDropDown";
-type alignmentType =
-  | "left"
-  | "start"
-  | "center"
-  | "right"
-  | "end"
-  | "justify"
-  | "";
+import FormatTextButtons from "../components/TextFormatingButtons";
+
 function Divider() {
   return <div className="divider" />;
 }
@@ -101,11 +91,7 @@ export default function ToolbarPlugin() {
       [key]: value,
     }));
   };
-  const alignment = (alignment: alignmentType) => {
-    if (alignment) {
-      editor.dispatchCommand(FORMAT_ELEMENT_COMMAND, alignment);
-    }
-  };
+
   const updateToolbar = useCallback(() => {
     const selection = $getSelection();
 
@@ -264,44 +250,13 @@ export default function ToolbarPlugin() {
           >
             <Icon as={LuRedo} color={state.isRedo ? "black" : "#666666"} />
           </button>
-          <button
-            onClick={() => {
-              editor.dispatchCommand(FORMAT_TEXT_COMMAND, "bold");
-            }}
-            className={"toolbar-item spaced " + (isBold ? "active" : "")}
-            aria-label="Format Bold"
-          >
-            <i className="format bold" />
-          </button>
-          <button
-            onClick={() => {
-              editor.dispatchCommand(FORMAT_TEXT_COMMAND, "italic");
-            }}
-            className={"toolbar-item spaced " + (isItalic ? "active" : "")}
-            aria-label="Format Italics"
-          >
-            <i className="format italic" />
-          </button>
-          <button
-            onClick={() => {
-              editor.dispatchCommand(FORMAT_TEXT_COMMAND, "strikethrough");
-            }}
-            className={
-              "toolbar-item spaced " + (isStrikethrough ? "active" : "")
-            }
-            aria-label="Format Strikethrough"
-          >
-            <i className="format strikethrough" />
-          </button>
-          <button
-            onClick={() => {
-              editor.dispatchCommand(FORMAT_TEXT_COMMAND, "code");
-            }}
-            className={"toolbar-item spaced " + (isCode ? "active" : "")}
-            aria-label="Insert Code"
-          >
-            <i className="format code" />
-          </button>
+          <FormatTextButtons
+            editor={editor}
+            isBold={isBold}
+            isCode={isCode}
+            isItalic={isItalic}
+            isStrikethrough={isStrikethrough}
+          />
           <button
             onClick={insertLink}
             className={"toolbar-item spaced " + (isLink ? "active" : "")}
@@ -310,7 +265,7 @@ export default function ToolbarPlugin() {
             <i className="format link" />
           </button>
           <Divider />
-          <AlignMenuButtons editor={editor}/>
+          <AlignMenuButtons editor={editor} />
           {isLink &&
             createPortal(
               <FloatingLinkEditor

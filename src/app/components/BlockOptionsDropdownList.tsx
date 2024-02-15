@@ -3,6 +3,7 @@ import {
   $createParagraphNode,
   $getSelection,
   $isRangeSelection,
+  LexicalCommand,
 } from "lexical";
 import { useEffect, useRef } from "react";
 import { BlockOptionsDropdownListProps } from "../utils/types";
@@ -53,119 +54,56 @@ export function BlockOptionsDropdownList({
     }
   }, [dropDownRef, setShowBlockOptionsDropDown, toolbarRef]);
 
-  const formatParagraph = () => {
-    if (blockType !== "paragraph") {
+  const formatBlock = (type: string, createNode?: Function, command?: LexicalCommand<any>) => {
+    if (blockType !== type) {
       editor.update(() => {
         const selection = $getSelection();
 
         if ($isRangeSelection(selection)) {
-          $wrapNodes(selection, () => $createParagraphNode());
+          if (createNode) {
+            $wrapNodes(selection, () => createNode(type));
+          } else if (command) {
+            editor.dispatchCommand(command, undefined);
+          }
         }
       });
     }
-    setShowBlockOptionsDropDown(false);
-  };
-
-  const formatLargeHeading = () => {
-    if (blockType !== "h1") {
-      editor.update(() => {
-        const selection = $getSelection();
-
-        if ($isRangeSelection(selection)) {
-          $wrapNodes(selection, () => $createHeadingNode("h1"));
-        }
-      });
-    }
-    setShowBlockOptionsDropDown(false);
-  };
-
-  const formatSmallHeading = () => {
-    if (blockType !== "h2") {
-      editor.update(() => {
-        const selection = $getSelection();
-
-        if ($isRangeSelection(selection)) {
-          $wrapNodes(selection, () => $createHeadingNode("h2"));
-        }
-      });
-    }
-    setShowBlockOptionsDropDown(false);
-  };
-
-  const formatBulletList = () => {
-    if (blockType !== "ul") {
-      editor.dispatchCommand(INSERT_UNORDERED_LIST_COMMAND, undefined);
-    } else {
-      editor.dispatchCommand(REMOVE_LIST_COMMAND, undefined);
-    }
-  };
-  const formatNumberedList = () => {
-    if (blockType !== "ol") {
-      editor.dispatchCommand(INSERT_ORDERED_LIST_COMMAND, undefined);
-    } else {
-      editor.dispatchCommand(REMOVE_LIST_COMMAND, undefined);
-    }
-  };
-
-  const formatQuote = () => {
-    if (blockType !== "quote") {
-      editor.update(() => {
-        const selection = $getSelection();
-
-        if ($isRangeSelection(selection)) {
-          $wrapNodes(selection, () => $createQuoteNode());
-        }
-      });
-    }
-    setShowBlockOptionsDropDown(false);
-  };
-
-  const formatCode = () => {
-    if (blockType !== "code") {
-      editor.update(() => {
-        const selection = $getSelection();
-
-        if ($isRangeSelection(selection)) {
-          $wrapNodes(selection, () => $createCodeNode());
-        }
-      });
-    } 
     setShowBlockOptionsDropDown(false);
   };
 
   return (
     <div className="dropdown" ref={dropDownRef}>
-      <button className="item" onClick={formatParagraph}>
+      <button className="item" onClick={() => formatBlock("paragraph", $createParagraphNode)}>
         <span className="icon paragraph" />
         <span className="text">Normal</span>
         {blockType === "paragraph" && <span className="active" />}
       </button>
-      <button className="item" onClick={formatLargeHeading}>
+      <button className="item" onClick={() => formatBlock("h1", $createHeadingNode)}>
         <span className="icon large-heading" />
         <span className="text">Large Heading</span>
         {blockType === "h1" && <span className="active" />}
       </button>
-      <button className="item" onClick={formatSmallHeading}>
+      <button className="item" onClick={() => formatBlock("h2", $createHeadingNode)}>
         <span className="icon small-heading" />
         <span className="text">Small Heading</span>
         {blockType === "h2" && <span className="active" />}
       </button>
-      <button className="item" onClick={formatBulletList}>
+      <button className="item" onClick={() => formatBlock("ul", undefined, INSERT_UNORDERED_LIST_COMMAND)}>
         <span className="icon bullet-list" />
         <span className="text">Bullet List</span>
         {blockType === "ul" && <span className="active" />}
       </button>
-      <button className="item" onClick={formatNumberedList}>
+      <button className="item" onClick={() => formatBlock("ol", undefined, INSERT_ORDERED_LIST_COMMAND)}>
         <span className="icon numbered-list" />
         <span className="text">Numbered List</span>
         {blockType === "ol" && <span className="active" />}
       </button>
-      <button className="item" onClick={formatQuote}>
+      <button className="item" onClick={() => formatBlock("quote", $createQuoteNode)}>
         <span className="icon quote" />
         <span className="text">Quote</span>
         {blockType === "quote" && <span className="active" />}
       </button>
-      <button className="item" onClick={formatCode}>
+      <button className="item" onClick={() => formatBlock("code", $createCodeNode)}>
         <span className="icon code" />
         <span className="text">Code Block</span>
         {blockType === "code" && <span className="active" />}
