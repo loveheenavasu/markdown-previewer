@@ -144,7 +144,7 @@ const Home = () => {
 
       <div className="markdown-support">
         <div className="button" onClick={() => router.push("/editor")}>
-          Click Here to See Demo
+          Generate Now
         </div>
       </div>
     </>
