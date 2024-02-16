@@ -10,7 +10,7 @@ export default function Seo({
   ogType = "website",
 }) {
   return (
-    <Head>
+    <>
       <title key="title">{`${title}`}</title>
       <meta name="description" content={description} />
       <meta key="og_type" property="og:type" content={ogType} />
@@ -46,6 +46,6 @@ export default function Seo({
         content={description}
       />
       <link rel="canonical" href={canonical ?? DOMAIN} />
-    </Head>
+    </>
   );
 }
