@@ -6,7 +6,7 @@ import {
   LexicalCommand,
 } from "lexical";
 import { useEffect, useRef } from "react";
-import { BlockOptionsDropdownListProps } from "../utils/types";
+import { BlockOptionsDropdownListProps } from "../../utils/types";
 import {
   INSERT_ORDERED_LIST_COMMAND,
   INSERT_UNORDERED_LIST_COMMAND,
@@ -54,7 +54,11 @@ export function BlockOptionsDropdownList({
     }
   }, [dropDownRef, setShowBlockOptionsDropDown, toolbarRef]);
 
-  const formatBlock = (type: string, createNode?: Function, command?: LexicalCommand<any>) => {
+  const formatBlock = (
+    type: string,
+    createNode?: Function,
+    command?: LexicalCommand<any>
+  ) => {
     if (blockType !== type) {
       editor.update(() => {
         const selection = $getSelection();
@@ -73,37 +77,62 @@ export function BlockOptionsDropdownList({
 
   return (
     <div className="dropdown" ref={dropDownRef}>
-      <button className="item" onClick={() => formatBlock("paragraph", $createParagraphNode)}>
+      <button
+        className="item"
+        onClick={() => formatBlock("paragraph", $createParagraphNode)}
+      >
         <span className="icon paragraph" />
         <span className="text">Normal</span>
         {blockType === "paragraph" && <span className="active" />}
       </button>
-      <button className="item" onClick={() => formatBlock("h1", $createHeadingNode)}>
+      <button
+        className="item"
+        onClick={() => formatBlock("h1", $createHeadingNode)}
+      >
         <span className="icon large-heading" />
         <span className="text">Large Heading</span>
         {blockType === "h1" && <span className="active" />}
       </button>
-      <button className="item" onClick={() => formatBlock("h2", $createHeadingNode)}>
+      <button
+        className="item"
+        onClick={() => formatBlock("h2", $createHeadingNode)}
+      >
         <span className="icon small-heading" />
         <span className="text">Small Heading</span>
         {blockType === "h2" && <span className="active" />}
       </button>
-      <button className="item" onClick={() => formatBlock("ul", undefined, INSERT_UNORDERED_LIST_COMMAND)}>
+      <button
+        className="item"
+        onClick={() =>
+          formatBlock("ul", undefined, INSERT_UNORDERED_LIST_COMMAND)
+        }
+      >
         <span className="icon bullet-list" />
         <span className="text">Bullet List</span>
         {blockType === "ul" && <span className="active" />}
       </button>
-      <button className="item" onClick={() => formatBlock("ol", undefined, INSERT_ORDERED_LIST_COMMAND)}>
+      <button
+        className="item"
+        onClick={() =>
+          formatBlock("ol", undefined, INSERT_ORDERED_LIST_COMMAND)
+        }
+      >
         <span className="icon numbered-list" />
         <span className="text">Numbered List</span>
         {blockType === "ol" && <span className="active" />}
       </button>
-      <button className="item" onClick={() => formatBlock("quote", $createQuoteNode)}>
+      <button
+        className="item"
+        onClick={() => formatBlock("quote", $createQuoteNode)}
+      >
         <span className="icon quote" />
         <span className="text">Quote</span>
         {blockType === "quote" && <span className="active" />}
       </button>
-      <button className="item" onClick={() => formatBlock("code", $createCodeNode)}>
+      <button
+        className="item"
+        onClick={() => formatBlock("code", $createCodeNode)}
+      >
         <span className="icon code" />
         <span className="text">Code Block</span>
         {blockType === "code" && <span className="active" />}

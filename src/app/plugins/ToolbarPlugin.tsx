@@ -26,7 +26,7 @@ import {
   getDefaultCodeLanguage,
   getCodeLanguages,
 } from "@lexical/code";
-import { FloatingLinkEditor } from "../components/FloatingLinkEditor";
+import { FloatingLinkEditor } from "../components/FloatingLinkEditor/FloatingLinkEditor";
 import { SelectProps } from "../utils/types";
 import { BlockOptionsDropdownList } from "../components/BlockOptionsDropdownList";
 import { getSelectedNode } from "../utils/lexicalHelper";

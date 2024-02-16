@@ -1,5 +1,3 @@
-import Head from "next/head";
-
 const DOMAIN = "https://markdown-previewer-e227.vercel.app";
 
 export default function Seo({

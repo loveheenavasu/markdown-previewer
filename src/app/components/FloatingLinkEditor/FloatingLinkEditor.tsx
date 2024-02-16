@@ -6,13 +6,13 @@ import {
   SELECTION_CHANGE_COMMAND,
 } from "lexical";
 import { useCallback, useEffect, useRef, useState } from "react";
-import { LowPriority } from "../utils/const";
-import { getSelectedNode } from "../utils/lexicalHelper";
+import { LowPriority } from "../../utils/const";
+import { getSelectedNode } from "../../utils/lexicalHelper";
 
 import { $isLinkNode, TOGGLE_LINK_COMMAND } from "@lexical/link";
 import { $getNearestNodeOfType, mergeRegister } from "@lexical/utils";
-import { FloatingLinkEditorProps } from "../utils/types";
-import { PositionEditorElement } from "./PositionEditorElement";
+import { FloatingLinkEditorProps } from "../../utils/types";
+import { PositionEditorElement } from "../PositionEditorElement";
 
 export function FloatingLinkEditor({
   editor,
