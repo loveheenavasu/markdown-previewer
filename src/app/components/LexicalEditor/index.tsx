@@ -19,7 +19,6 @@ import prepopulatedText from "../../utils/SampleText";
 import LexicalErrorBoundary from "@lexical/react/LexicalErrorBoundary";
 import Transformaer from "../../utils/Transformer";
 import { Box } from "@chakra-ui/react";
-import ImagePlugin from "@/app/plugins/ImagePlugin";
 
 function Placeholder() {
   return (
@@ -78,7 +77,6 @@ export default function Editor() {
               <ListPlugin />
               <LinkPlugin />
               <MarkdownShortcutPlugin transformers={TRANSFORMERS} />
-              <ImagePlugin />
               <CodeHighlightPlugin />
             </div>
           </div>
