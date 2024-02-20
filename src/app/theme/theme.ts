@@ -102,7 +102,7 @@ const theme = extendTheme({
   components: {
     Text: {
       baseStyle: (props: ThemeProps) => ({
-        color: props.colorMode === "dark" ? "#333" : "white",
+        color: props.colorMode === "dark" ? "#333" :  "white",
         fontFamily: "Ubuntu Mono, Monospace",
         fontWeight: "bold",
         sizes: {
