@@ -60,7 +60,7 @@ export default function Editor() {
     fontFamily: " ubuntu, monospace",
   };
   return (
-    <>
+    <div>
       <LexicalComposer initialConfig={editorConfig}>
         <div style={containerStyles}>
           <div className="editor-container" style={{ flex: 1 }}>
@@ -85,6 +85,6 @@ export default function Editor() {
           </Box>
         </div>
       </LexicalComposer>
-    </>
+    </div>
   );
 }

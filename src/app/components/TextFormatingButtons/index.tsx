@@ -22,7 +22,7 @@ export default function FormatTextButtons({
   isCode,
   isItalic,
   isStrikethrough,
-}: formatTextProps) {
+}: Readonly<formatTextProps>) {
   const formatHandler = (commandFormatType: commandFormat) => {
     editor.dispatchCommand(FORMAT_TEXT_COMMAND, commandFormatType);
   };

@@ -70,14 +70,14 @@ const Home = () => {
           </div>
         </div>
         <div className="markdown-support">
-          <div className="demo-button" onClick={() => router.push("/editor")}>
+          <button className="demo-button" onClick={() => router.push("/editor")}>
             Generate Now
-          </div>
+          </button>
         </div>
-        <div className="splash-screen__footer" onClick={handleClick}>
+        <button className="splash-screen__footer" onClick={handleClick}>
           <RiArrowDownDoubleFill />
           <span>Read More</span>
-        </div>
+        </button>
       </div>
       <div ref={ref}></div>
       <div className="landing__content">
@@ -143,9 +143,9 @@ const Home = () => {
       </div>
 
       <div className="markdown-support">
-        <div className="button" onClick={() => router.push("/editor")}>
+        <button className="button" onClick={() => router.push("/editor")}>
           Generate Now
-        </div>
+        </button>
       </div>
     </>
   );

@@ -26,11 +26,11 @@ import {
   getDefaultCodeLanguage,
   getCodeLanguages,
 } from "@lexical/code";
-import { FloatingLinkEditor } from "../components/FloatingLinkEditor/FloatingLinkEditor";
+import { FloatingLinkEditor } from "../components/FloatingLinkEditor";
 import { SelectProps } from "../utils/types";
 import { BlockOptionsDropdownList } from "../components/BlockOptionsDropdownList";
 import { getSelectedNode } from "../utils/lexicalHelper";
-import { AlignMenuButtons } from "../components/AlignMentDropDown";
+import { AlignMenuButtons } from "../components/TextAlignmentButtons";
 import FormatTextButtons from "../components/TextFormatingButtons";
 
 function Divider() {
@@ -53,8 +53,7 @@ function Select({ onChange, className, options, value }: SelectProps) {
 export default function ToolbarPlugin() {
   const [editor] = useLexicalComposerContext();
   const toolbarRef = useRef(null);
-  const [showBlockOptionsDropDown, setShowBlockOptionsDropDown] =
-    useState(false);
+  const [showBlockOptionsDropDown, setShowBlockOptionsDropDown] = useState(false);
   const [isLink, setIsLink] = useState(false);
   const [linkUrl, setLinkUrl] = useState("");
   const [state, setState] = useState({
