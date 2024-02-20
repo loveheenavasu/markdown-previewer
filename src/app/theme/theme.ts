@@ -94,6 +94,9 @@ const theme = extendTheme({
         bg: props.colorMode === "dark" ? "black" : "white",
         color: props.colorMode === "dark" ? "white" : "black",
       },
+      ".demo-button:hover" : {
+        color: props.colorMode === "dark" ? "white" : "black",
+      }
     }),
   },
   components: {
